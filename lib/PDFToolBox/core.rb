@@ -4,7 +4,7 @@ require "tmpdir"
 module PDFToolBox
 	class MissingLibrary < StandardError
 		def initialize ()
-			super("Could not find your library")
+			super("QPDF is not installed on your system.")
 		end
 	end
 	
@@ -14,7 +14,7 @@ module PDFToolBox
 		def initialize(input_params = {})
 			@input_params = input_params
 			@input_params[:qpdf_path] ||= locate_qpdf || "qpdf"
-			#raise MissingLibrary
+			raise MissingLibrary if pdftk_version.to_f == 0
 		end
 		
 		def self.locate_qpdf
@@ -23,6 +23,11 @@ module PDFToolBox
 				(auto_path.nil? || auto_path.empty?) ? nil : auto_path
         	end			
 		end
+		
+		
+		def qpdf_version
+			%x{#{@input_params[:qpdf_path]} --version 2>&1}.scan(/version (\S*) Copyright/).join
+		end 
 		
 		def locate_qpdf
 			self.class.locate_qpdf
