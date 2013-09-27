@@ -4,7 +4,7 @@ require "tmpdir"
 module PDFToolBox
 	class MissingLibrary < StandardError
 		def initialize (libname)
-			super("Could not find your library #{libraryName}")
+			super("Could not find your library #{libname}")
 		end
 	end
 	
