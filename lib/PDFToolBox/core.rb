@@ -1,4 +1,5 @@
 require "open3"
+require 'open-uri'
 require "tmpdir"
 
 module PDFToolBox
