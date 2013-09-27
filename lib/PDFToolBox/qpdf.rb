@@ -13,7 +13,7 @@ module PDFToolBox
 		end
 		
 		def decrypt(infile="", outfile="")
-			operation = {:in_file_path => infile , :out_file_path => outfile , :operation ="--decrypt"}
+			operation = {:in_file_path => infile , :out_file_path => outfile , :operation =>"--decrypt"}
 			@core.qpdf(operation)
 		end 
 	end
