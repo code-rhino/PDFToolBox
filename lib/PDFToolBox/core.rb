@@ -42,17 +42,17 @@ module PDFToolBox
 			@error = nil 
 			@input_file_map = nil 
 			input_params = @input_params.merge(input_params)
-			cmd = "#{@input_params[:in_file_path]} #{@input_params[:operation]} #{@input_params[:out_file_path]}"
+			cmd = "#{@input_params[:qpdf_path]} #{@input_params[:in_file_path]} #{@input_params[:operation]} #{@input_params[:out_file_path]}"
 			
 			Open3.popen3(cmd) do | stdin, stdout , stderr |
-			#	if @input
-			#		@input.rewind
-			#		stdin.puts @input.read 
-			#	end
-			#	stdin.close 
-			#	
-			#	@output.puts stdout.read if @output && !@output.is_a?(String)
-			#	raise(CommandError, {:stderr => @error, :cmd => cmd}) unless (@error = stderr.read).empty?
+				if @input
+					@input.rewind
+					stdin.puts @input.read 
+				end
+				stdin.close 
+				
+				@output.puts stdout.read if @output && !@output.is_a?(String)
+				raise(CommandError, {:stderr => @error, :cmd => cmd}) unless (@error = stderr.read).empty?
 			end
 		end
 		
