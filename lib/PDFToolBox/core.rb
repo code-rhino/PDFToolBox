@@ -14,7 +14,7 @@ module PDFToolBox
 		def initialize(input_params = {})
 			@input_params = input_params
 			@input_params[:qpdf_path] ||= locate_qpdf || "qpdf"
-			raise MissingLibrary if qpdf_version.to_f == 0
+			#raise MissingLibrary if qpdf_version.to_f == 0
 			@input_params[:qpdf_version] = qpdf_version.to_f
 		end
 		
