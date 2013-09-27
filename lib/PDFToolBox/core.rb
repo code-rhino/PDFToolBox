@@ -19,7 +19,7 @@ module PDFToolBox
 		
 		def self.locate_qpdf
 			@pdftk_location ||= begin
-				auto_path = %x{locate pdftk | grep "/bin/pdftk"}.strip.split("\n").first
+				auto_path = %x{locate qpdf | grep "/bin/qpdf"}.strip.split("\n").first
 				(auto_path.nil? || auto_path.empty?) ? nil : auto_path
         	end			
 		end
