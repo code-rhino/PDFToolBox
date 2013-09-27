@@ -27,7 +27,7 @@ module PDFToolBox
 		
 		
 		def qpdf_version
-			%x{#{@input_params[:qpdf_path]} --version}.scan(/version (\S*) Copyright (c)/).join
+			%x{#{@input_params[:qpdf_path]} --version} #.scan(/version (\S*) Copyright (c)/).join
 		end 
 		
 		def locate_qpdf
