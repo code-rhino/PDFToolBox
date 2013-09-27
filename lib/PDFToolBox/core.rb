@@ -14,11 +14,12 @@ module PDFToolBox
 		def initialize(input_params = {})
 			@input_params = input_params
 			@input_params[:qpdf_path] ||= locate_qpdf || "qpdf"
-			raise MissingLibrary if pdftk_version.to_f == 0
+			raise MissingLibrary if qpdf_version.to_f == 0
+			@input_params[:qpdf_version] = qpdf_version.to_f
 		end
 		
 		def self.locate_qpdf
-			@pdftk_location ||= begin
+			@qpdf_location ||= begin
 				auto_path = %x{locate qpdf | grep "/bin/qpdf"}.strip.split("\n").first
 				(auto_path.nil? || auto_path.empty?) ? nil : auto_path
         	end			
