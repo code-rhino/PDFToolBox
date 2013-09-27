@@ -3,19 +3,24 @@ require "tmpdir"
 
 module PDFToolBox
 	class MissingLibrary < StandardError
-		def initialize ()
-			super("QPDF is not installed on your system.")
+		def initialize (args = {})
+			super("#{args[:libraryname]} is not installed on your system.")
+		end
+	end
+	
+	class CommandError < StandardError 
+		
+		def initialize (args = {})
+			super("#{args[:stderr]} #!# While execuing #=> `#{args[:cmd]}`")
 		end
 	end
 	
 	class Core 
-	
 		attr_reader :input_params
 		def initialize(input_params = {})
 			@input_params = input_params
 			@input_params[:qpdf_path] ||= locate_qpdf || "qpdf"
-			#raise MissingLibrary if qpdf_version.to_f == 0
-			@input_params[:qpdf_version] = qpdf_version
+			raise(MissingLibrary, {:libraryname => "QPDF"}) if qpdf_version.to_f == 0
 		end
 		
 		def self.locate_qpdf
@@ -27,8 +32,30 @@ module PDFToolBox
 		
 		
 		def qpdf_version
-			%x{#{@input_params[:qpdf_path]} --version} #.scan(/version (\S*) Copyright (c)/).join
+			%x{#{@input_params[:qpdf_path]} --version}.gsub(/\r\n|\r/, "\n").scan(/version (\S*)\n/).join
 		end 
+		
+		def qpdf(input_params = {})
+			@input = nil 
+			@output = nil 
+			@error = nil 
+			@input_file_map = nil 
+			input_params = @input_params.merge(input_params)
+			cmd = "#{@input_params[:in_file_path]} #{@input_params[:operation]} #{@input_params[:out_file_path]}"
+			
+			Open3.popen3(cmd) do | stdin, stdout , stderr |
+				if @input
+					@input.rewind
+					stdin.puts @input.read 
+				end
+				stdin.close 
+				
+				@output.puts stdout.read if @output && !@output.is_a?(String)
+				raise(CommandError, {:stderr => @error, :cmd => cmd}) unless (@error = stderr.read).empty?
+			end
+		end
+		
+	
 		
 		def locate_qpdf
 			self.class.locate_qpdf
