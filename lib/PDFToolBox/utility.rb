@@ -22,7 +22,7 @@ module PDFToolBox
 		def combinePDFscat(ranges = [], outfile="")
 			inrange = ""		
 			ranges.each do |range|
-				inrange << range['pdf']+" "
+				inrange << "#{range['pdf']} "
 			end
 			operation = {:input_range => inrange , :output => outfile , :operation => "cat"}
 			@Core.pdftk(operation)
