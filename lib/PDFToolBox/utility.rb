@@ -19,7 +19,7 @@ module PDFToolBox
 			@Core.qpdf(operation)
 		end
 		
-		def combinePDFscat(ranges = [], outfile="", options = {})
+		def combinePDFscat(ranges = [], outfile="")
 			inrange = ""		
 			ranges.each do |range|
 				inrange << range['pdf']+" "
