@@ -12,5 +12,5 @@ gem 'PDFToolBox' , :git => 'git@github.com:code-rhino/PDFToolBox.git'
 
 USAGE
 ==========
-    pdfbox = PDFToolBox::QPDF.new
+    pdfbox = PDFToolBox::Utility.new
     pdftk.decrypt("/path/to/locked.pdf", "/path/for/unlocked.pdf" )
