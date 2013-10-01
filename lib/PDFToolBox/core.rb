@@ -66,7 +66,7 @@ module PDFToolBox
 			@input_file_map = nil 
 			input_params = @input_params.merge(input_params)
 			cmd ="./public/outfile.pdf ./public/outfile22.pdf" #{@input_params[:operation]} output #{@input_params[:output]}"	
-			run_cmd(cmd)	
+			#run_cmd(cmd)	
 		end
 		
 		def qpdf(input_params = {})
