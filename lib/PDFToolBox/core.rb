@@ -65,7 +65,7 @@ module PDFToolBox
 			@error = nil 
 			@input_file_map = nil 
 			input_params = @input_params.merge(input_params)
-			cmd ="#{@input_params[:input_range]} #{@input_params[:operation]} output #{@input_params[:output]}"	
+			cmd ="./public/outfile.pdf ./public/outfile22.pdf" #{@input_params[:operation]} output #{@input_params[:output]}"	
 			run_cmd(cmd)	
 		end
 		
